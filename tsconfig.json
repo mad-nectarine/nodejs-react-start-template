@@ -1,0 +1,67 @@
+{
+  "compilerOptions": {
+    "target": "ES6",
+    "module": "commonjs",
+    "declaration": false,
+    "noImplicitAny": false,
+    "removeComments": false,
+    "noLib": false,
+    "sourceMap": true,
+    "preserveConstEnums": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "jsx": "react"
+  },
+  "formatCodeOptions": {
+    "indentSize": 4,
+    "tabSize": 4,
+    "newLineCharacter": "\r\n",
+    "convertTabsToSpaces": true,
+    "insertSpaceAfterCommaDelimiter": true,
+    "insertSpaceAfterSemicolonInForStatements": true,
+    "insertSpaceBeforeAndAfterBinaryOperators": true,
+    "insertSpaceAfterKeywordsInControlFlowStatements": true,
+    "insertSpaceAfterFunctionKeywordForAnonymousFunctions": true,
+    "insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis": false,
+    "placeOpenBraceOnNewLineForFunctions": true,
+    "placeOpenBraceOnNewLineForControlBlocks": true
+  },
+  "compileOnSave": true,
+  "filesGlob": [
+    "./**/*.ts",
+    "./**/*.tsx",
+    "!./node_modules/**/*.ts",
+    "!./bower_components/**/*.ts",
+    "!./typings/**/*.ts",
+    "!./node_modules/**/*.tsx",
+    "!./bower_components/**/*.tsx",
+    "!./typings/**/*.tsx"
+  ],
+  "atom": {
+    "rewriteTsconfig": true
+  },
+  "files": [
+    "./app.ts",
+    "./Scripts/typings/body-parser/body-parser.d.ts",
+    "./Scripts/typings/cookie-parser/cookie-parser.d.ts",
+    "./Scripts/typings/debug/debug.d.ts",
+    "./Scripts/typings/express-session/express-session.d.ts",
+    "./Scripts/typings/express/express.d.ts",
+    "./Scripts/typings/mime/mime.d.ts",
+    "./Scripts/typings/multer/multer.d.ts",
+    "./Scripts/typings/node-uuid/node-uuid-base.d.ts",
+    "./Scripts/typings/node-uuid/node-uuid-cjs.d.ts",
+    "./Scripts/typings/node-uuid/node-uuid.d.ts",
+    "./Scripts/typings/node/node.d.ts",
+    "./Scripts/typings/react-redux/react-redux.d.ts",
+    "./Scripts/typings/react/react-dom.d.ts",
+    "./Scripts/typings/react/react.d.ts",
+    "./Scripts/typings/redux-devtools/redux-devtools.d.ts",
+    "./Scripts/typings/redux-thunk/redux-thunk.d.ts",
+    "./Scripts/typings/redux/redux.d.ts",
+    "./Scripts/typings/serve-favicon/serve-favicon.d.ts",
+    "./Scripts/typings/serve-static/serve-static.d.ts",
+    "./Scripts/typings/superagent/superagent.d.ts",
+    "./Scripts/typings/tsd.d.ts",
+    "./src/config/routes.config.ts"
+  ]
+}
