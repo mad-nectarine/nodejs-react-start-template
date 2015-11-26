@@ -106,26 +106,26 @@ gulp.task("tsc-compile", function () {
 
 gulp.task("browserify", function () {
     console.log("executing [browserify]...");
-    var pages = [ 
-        'Todoindex'
+    var apps = [ 
+        'index'
          ];
-    pages.forEach(function(item){
+    apps.forEach(function(item){
         console.log("browserifying for min [" + item + "]...");
         browserify({
-            entries: ['./public/scripts/pages/' + item + '.js'],
+            entries: ['./src/app_endpoints/' + item + '.client.js'],
             transform: [reactify] })
         .bundle()
-        .pipe(source('./public/scripts/pages/built/' + item + '.min.js'))
+        .pipe(source('./public/scripts/apps/' + item + '.min.js'))
         .pipe(buffer())
         .pipe(uglify())
         .pipe(gulp.dest('./'));
         
         console.log("browserifying for debug [" + item + "]...");
         browserify({
-            entries: ['./public/scripts/pages/' + item + '.js'],
+            entries: ['./src/app_endpoints/' + item + '.client.js'],
             transform: [reactify] })
         .bundle()
-        .pipe(source('./public/scripts/pages/built/' + item + '.debug.js'))
+        .pipe(source('./public/scripts/apps/' + item + '.debug.js'))
         .pipe(buffer())
         .pipe(gulp.dest('./'));
     });
@@ -171,7 +171,7 @@ gulp.task("babel", function () {
         });
 });
 
-gulp.task("script", function (callback) {
+gulp.task("build", function (callback) {
     console.log("executing [script]...");
     return seq(
         "tsconfig-update",

@@ -47,6 +47,7 @@
     "./Scripts/typings/express-session/express-session.d.ts",
     "./Scripts/typings/express/express.d.ts",
     "./Scripts/typings/mime/mime.d.ts",
+    "./Scripts/typings/morgan/morgan.d.ts",
     "./Scripts/typings/multer/multer.d.ts",
     "./Scripts/typings/node-uuid/node-uuid-base.d.ts",
     "./Scripts/typings/node-uuid/node-uuid-cjs.d.ts",
@@ -62,6 +63,17 @@
     "./Scripts/typings/serve-static/serve-static.d.ts",
     "./Scripts/typings/superagent/superagent.d.ts",
     "./Scripts/typings/tsd.d.ts",
-    "./src/config/routes.config.ts"
+    "./src/actions/IndexActions.ts",
+    "./src/config/RoutesConfig.ts",
+    "./src/reducers/IndexReducer.ts",
+    "./src/routes/Index.ts",
+    "./src/util/StoreFactory.ts",
+    "./src/app_endpoints/index.client.tsx",
+    "./src/app_endpoints/Index.server.tsx",
+    "./src/apps/IndexApp.tsx",
+    "./src/components/layouts/DefaultLayout.tsx",
+    "./src/components/layouts/ReduxFullPageLayout.tsx",
+    "./src/components/layouts/ReduxProviderLayout.tsx",
+    "./src/components/views/MessageArea.tsx"
   ]
 }

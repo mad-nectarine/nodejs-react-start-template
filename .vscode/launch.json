@@ -9,7 +9,7 @@
 			"stopOnEntry": false,
 			"args": [],
 			"cwd": ".",
-			"runtimeExecutable": "please input node.exe path for launch by vscode.",
+			"runtimeExecutable": "C:/Tool/nodist/bin/node.exe",
 			"runtimeArgs": [
 				"--nolazy"
 			],
