@@ -1,0 +1,35 @@
+{
+  "compilerOptions": {
+    "target": "ES6",
+    "module": "commonjs"
+  },
+  "filesGlob": [
+    "./**/*.js",
+    "./**/*.jsx",
+    "!./**/*.min.js",
+    "!./**/*.debug.js",
+    "!./gulpfile.js",
+    "!./babel/*.js",
+    "!./node_modules/**/*.js",
+    "!./bower_components/**/*.js",
+    "!./typings/**/*.js",
+    "!./node_modules/**/*.jsx",
+    "!./bower_components/**/*.jsx",
+    "!./typings/**/*.jsx"
+  ],
+  "files": [
+    "./app.js",
+    "./src/actions/IndexActions.js",
+    "./src/app_endpoints/index.client.js",
+    "./src/app_endpoints/Index.server.js",
+    "./src/apps/IndexApp.js",
+    "./src/components/layouts/DefaultLayout.js",
+    "./src/components/layouts/ReduxFullPageLayout.js",
+    "./src/components/layouts/ReduxProviderLayout.js",
+    "./src/components/views/MessageArea.js",
+    "./src/config/RoutesConfig.js",
+    "./src/reducers/IndexReducer.js",
+    "./src/routes/Index.js",
+    "./src/util/StoreFactory.js"
+  ]
+}
