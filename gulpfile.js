@@ -11,22 +11,25 @@ var babel = require('gulp-babel');
 var tsconfig = require('tsconfig');
 var fs = require('fs');
 var path = require('path');
-
+var through = require('through2');
+var glob = require('glob');
+var es = require('event-stream');
+var rename = require('gulp-rename');
+var path = require('path');
+    
 /** config  **/
 gulp.task("tsconfig-update", function () {
     console.log("executing [tsconfig-update]...");
-    //load tsconfig.json
-    var tsConfigPath = "./tsconfig.json";
+    var configPath = "./tsconfig.json";
     var projectDir = path.dirname();
     var load_tsconfig = function (resolve, reject) {
-        fs.stat(tsConfigPath, function (err) {
+        fs.stat(configPath, function (err) {
             if (err) {
-                reject(path.default.resolve(tsConfigPath) + " not exist");
+                reject(path.default.resolve(configPath) + " not exist");
             }
-            resolve(tsConfigPath);
+            resolve(configPath);
         });
     };
-    //file list取得
     var get_files = function () {
         return tsconfig
             .load(projectDir)
@@ -41,12 +44,9 @@ gulp.task("tsconfig-update", function () {
                 return result;
             });
     };
-    //
     var write_config = function (tsconfig) {
-        //Overwrite tsconfig.json
-        fs.writeFile(tsConfigPath, JSON.stringify(tsconfig, null, 2));
+        fs.writeFile(configPath, JSON.stringify(tsconfig, null, 2));
     };
-
     new Promise(load_tsconfig)
         .then(get_files)
         .then(write_config)
@@ -56,21 +56,19 @@ gulp.task("tsconfig-update", function () {
 });
 gulp.task("jsconfig-update", function () {
     console.log("executing [jsconfig-update]...");
-    //load jsconfig.json
-    var tsConfigPath = "./jsconfig.json";
+    var configPath = "./jsconfig.json";
     var projectDir = path.dirname();
     var load_tsconfig = function (resolve, reject) {
-        fs.stat(tsConfigPath, function (err) {
+        fs.stat(configPath, function (err) {
             if (err) {
-                reject(path.resolve(tsConfigPath) + " not exist");
+                reject(path.resolve(configPath) + " not exist");
             }
-            resolve(tsConfigPath);
+            resolve(configPath);
         });
     };
-    //file list取得
     var get_files = function () {
         return tsconfig
-            .readFile(tsConfigPath)
+            .readFile(configPath)
             .then(function (result) {
                 //Resolve files into relative path"
                 var resolved = [];
@@ -82,12 +80,9 @@ gulp.task("jsconfig-update", function () {
                 return result;
             });
     };
-    //
     var write_config = function (tsconfig) {
-        //Overwrite jsconfig.json
-        fs.writeFile(tsConfigPath, JSON.stringify(tsconfig, null, 2));
+        fs.writeFile(configPath, JSON.stringify(tsconfig, null, 2));
     };
-
     return new Promise(load_tsconfig)
         .then(get_files)
         .then(write_config)
@@ -104,50 +99,74 @@ gulp.task("tsc-compile", function () {
     return tsResult.js.pipe(gulp.dest('./'));
 });
 
-gulp.task("browserify", function () {
-    console.log("executing [browserify]...");
-    var apps = [ 
-        'index'
-         ];
-    apps.forEach(function(item){
-        console.log("browserifying for min [" + item + "]...");
-        browserify({
-            entries: ['./src/app_endpoints/' + item + '.client.js'],
-            transform: [reactify] })
-        .bundle()
-        .pipe(source('./public/scripts/apps/' + item + '.min.js'))
-        .pipe(buffer())
-        .pipe(uglify())
-        .pipe(gulp.dest('./'));
-        
-        console.log("browserifying for debug [" + item + "]...");
-        browserify({
-            entries: ['./src/app_endpoints/' + item + '.client.js'],
-            transform: [reactify] })
-        .bundle()
-        .pipe(source('./public/scripts/apps/' + item + '.debug.js'))
-        .pipe(buffer())
-        .pipe(gulp.dest('./'));
+gulp.task("browserify-release", function (done) {    
+    console.log("executing [browserify-release]...");
+    var configPath = "./gulpbrowserify.json";
+    if(!fs.existsSync(configPath)){
+        done("config file not found. [" + configPath + "]");
+    }
+    var config = require(configPath);
+    glob(config.glob, function(err, files) {
+        if(err) done(err);
+        var tasks = files.map(
+            function(entry) {
+                return browserify({ entries: [entry],transform: [reactify] })
+                    .bundle()
+                    .pipe(source(entry))
+                    .pipe(rename({
+                        dirname: config.dist,
+                        basename: path.basename(entry, config.rename.extname.source),
+                        extname: config.rename.extname.release
+                    }))
+                    .pipe(buffer())
+                    .pipe(uglify())
+                    .pipe(gulp.dest('./'));
+            });
+        es.merge(tasks).on('end', done);
+    });
+});
+
+gulp.task("browserify-debug", function (done) {    
+    console.log("executing [browserify-debug]...");
+    var configPath = "./gulpbrowserify.json";
+    if(!fs.existsSync(configPath)){
+        done("config file not found. [" + configPath + "]");
+    }
+    var config = require(configPath);
+    glob(config.glob, function(err, files) {
+        if(err) done(err);
+        var tasks = files.map(
+            function(entry) {
+                return browserify({ entries: [entry],transform: [reactify] })
+                    .bundle()
+                    .pipe(source(entry))
+                    .pipe(rename({
+                        dirname: config.dist,
+                        basename: path.basename(entry, config.rename.extname.source),
+                        extname: config.rename.extname.debug
+                    }))
+                    .pipe(buffer())
+                    .pipe(gulp.dest('./'));
+            });
+        es.merge(tasks).on('end', done);
     });
 });
 
 gulp.task("babel", function () {
     console.log("executing [babel]...");
-    //load jsconfig.json
-    var tsConfigPath = "./jsconfig.json";
+    var configPath = "./jsconfig.json";
     var projectDir = path.dirname();
     var load_tsconfig = function (resolve, reject) {
-        fs.stat(tsConfigPath, function (err) {
+        fs.stat(configPath, function (err) {
             if (err) {
-                reject(path.resolve(tsConfigPath) + " not exist");
+                reject(path.resolve(configPath) + " not exist");
             }
-            resolve(tsConfigPath);
+            resolve(configPath);
         });
     };
-    //file list取得
     var convert = function () {
         return tsconfig
-            .readFile(tsConfigPath)
+            .readFile(configPath)
             .then(function (result) {
                 //Resolve files into relative path"
                 result.files.forEach(function (file) {
@@ -178,7 +197,7 @@ gulp.task("build", function (callback) {
         "tsc-compile",
         "jsconfig-update",
         "babel",
-        "browserify",
-        callback
-        );
+        "browserify-release",
+        "browserify-debug",
+        callback);
 });

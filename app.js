@@ -24,8 +24,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
+//"var hoge required 'hoge'" modules have no export default in ".d.ts"
+//I wanna modify to "import hoge from 'hoge'"
 var express = require('express');
-
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
@@ -51,7 +52,7 @@ if (app.get('env') === 'development') {
                     if (err) {
                         return console.log("log output error:" + err);
                     }
-                    return console.log(str);
+                    return console.log(str.slice(0, str.length - 1));
                 };
                 if (!fs.existsSync(dirpath)) {
                     fs.mkdirSync(dirpath);
