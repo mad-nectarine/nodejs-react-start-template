@@ -76,6 +76,7 @@ if (app.get('env') === 'development') {
     app.use((err: any, req, res, next: Function): any => {
         res.status(err.status || 500);
         res.render('error', {
+            title: "Server Error",
             message: err.message,
             error: err
         });
@@ -86,6 +87,7 @@ if (app.get('env') === 'development') {
 app.use((err: any, req, res, next: Function): any => {
     res.status(err.status || 500);
     res.render('error', {
+        title: "Server Error",
         message: err.message,
         error: {}
     });

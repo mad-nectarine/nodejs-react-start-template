@@ -68,10 +68,12 @@
     "./src/reducers/IndexReducer.ts",
     "./src/routes/Index.ts",
     "./src/util/StoreFactory.ts",
+    "./src/app_endpoints/error.server.tsx",
     "./src/app_endpoints/index.client.tsx",
     "./src/app_endpoints/Index.server.tsx",
     "./src/apps/IndexApp.tsx",
     "./src/components/layouts/DefaultLayout.tsx",
+    "./src/components/layouts/PlainFullPageLayout.tsx",
     "./src/components/layouts/ReduxFullPageLayout.tsx",
     "./src/components/layouts/ReduxProviderLayout.tsx",
     "./src/components/views/MessageArea.tsx"
