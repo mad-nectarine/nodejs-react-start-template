@@ -20,10 +20,12 @@
   "files": [
     "./app.js",
     "./src/actions/IndexActions.js",
+    "./src/app_endpoints/error.server.js",
     "./src/app_endpoints/index.client.js",
     "./src/app_endpoints/Index.server.js",
     "./src/apps/IndexApp.js",
     "./src/components/layouts/DefaultLayout.js",
+    "./src/components/layouts/PlainFullPageLayout.js",
     "./src/components/layouts/ReduxFullPageLayout.js",
     "./src/components/layouts/ReduxProviderLayout.js",
     "./src/components/views/MessageArea.js",
